@@ -33,8 +33,12 @@ umf <- unmarkedFrameOccu(y)
 
 #fit the generating model
 occ.model <- occu(~ 1 ~ 1, umf)
-backTransform(occ.model,"state")
-backTransform(occ.model,"det")
+backTransform(occ.model,"state")@estimate
+backTransform(occ.model,"det")@estimate
+
+#True values
+psi
+p
 
 ###################################
 #What are the unique combinations of detection histories
@@ -63,6 +67,7 @@ likelihood=function(param,combn){
 #First output is psi and the second output is p
 optim(par=c(0.3,0.2), fn=likelihood,combn=combn)$par
 
+#Same as MLE values from unmarked
 
 ####################################################
 ####################################################
@@ -82,12 +87,7 @@ y2=rmultinom(1,n.sites,prob=c(
                     psi*p*(1-p),
                     psi*p^2))
 
+
 y2
-
-
-
-#unique detection histories of y
-det.hist=apply(y,1,paste,collapse=" ")
-table(det.hist)
 
 
